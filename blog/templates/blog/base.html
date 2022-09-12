@@ -2,10 +2,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Django Girls blog</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <title>Django Girls blog</title><!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
         <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
     </head>
     <body>
         <header class="page-header">
@@ -27,13 +29,27 @@
                           <li class="nav-item">
                             <a class="nav-link" href="#">Pricing</a>
                           </li>
-                          <li class="nav-item" style="justify-content: center;">
-                            <a class="nav-link" href="{% url 'register' %}" style="margin-left:700px;"><b>SignUp</b></a>
+                          <!-- <li class="nav-item" style="justify-content: center;">
+                            <a class="nav-link" href="{% url 'register' %}" ><b>SignUp</b></a>
                           </li>
                           <li class="nav-item" style="justify-content: center;">
                             <a class="nav-link" href=" {% url 'login' %} "><b>Login</b></a>
                             
-                          </li>
+                          </li> -->
+
+                          <div class="dropdown" style="margin-left: 750px;">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              Login
+                            </button>
+                            <ul class="dropdown-menu">
+                              
+                              <li><button class="dropdown-item" type="button" ><a href="{% url 'login'%}">Login</a></button></li>
+                              <li><button class="dropdown-item" type="button"><a href="{% url 'register'%}">SignUp</a></button></li>
+                              {% if user.is_authenticated%}
+                              <li><button class="dropdown-item" type="button"><a href="{% url 'logout_page'%}">Logout</a></button></li>
+                              {% endif %}
+                            </ul>
+                          </div>
                         </ul>
                       </div>
                     </div>

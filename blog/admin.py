@@ -11,7 +11,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-def export_to_csv(modeladmin, request,queryset):
+def export_to_csv(modeladmin, request, queryset):
     opts =modeladmin.model._meta
     response = HttpResponse(content_type = 'text/csv')
     response['Conttent-Disposition'] = 'attachment;' 'filename = {}.csv'.format(opts.verbose_name)
@@ -42,7 +42,8 @@ class UserAdmin(admin.ModelAdmin):
 class PostAdmin(admin.ModelAdmin):
     list_display =('title','author','category')
     list_filter =('title','author','category')
-
+    search_fields = ['title',]
+    action = [export_to_csv]
 
 
 #admin.site.register(Post,PostAdmin)
