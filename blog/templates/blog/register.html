@@ -1,0 +1,18 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+
+    <h2>Registration</h2>
+    <table>
+    <form method="POST" class="SignupForm" enctype="multipart/form-data">
+    
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        <button type="submit" class="save btn btn-secondary">Save</button>
+    </form>
+    </table>
+   
+
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <article class="post">
+        
+        {% if post.published_date %}
+            <time class="date">
+                {{ post.published_date }}
+            </time>
+        {% endif %}
+        <h2><img src ="{{post.thumbnail.url}}" alt="post.title"  style = "width:20%">
+            {{ post.title }}</h2>
+        <img src = "{{post.feature.url}}">
+        <h6>Category:-{{ post.category }}</h6>
+        <p>{{ post.text|linebreaksbr }}</p>
+       
+        {% if user.is_authenticated %}
+            <a class="btn btn-secondary" href="{% url 'post_edit' slug=post.slug %}"> Edit </a>
+        {% endif %}
+
+        {% for tag in post.tag.all %}
+            <h6><a href="{% url 'tags_list' slug=post.slug %}">{{ tag.name }}</a></h6>
+        {% endfor %}
+
+    </article>
+
+    
+    <h2>Comments</h2>
+        
+    <form method="POST" class="comments">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <button type="submit" class="save btn btn-secondary">Save</button>
+    </form>
+    {% for comment in comments %}
+        <div class="comment">
+            <p class="info">{{ comment.name }}</p>
+                {{ comment.body|linebreaks }}
+
+        {% for replay in comment.replies.all %}
+            <p class="info">{{ replay.name }}</p>
+            <li>{{ replay.body }}</li>
+        {% endfor %}
+
+        <h5>Replay</h5>
+        <form method="POST">
+            {{ comment_form.as_p }}
+            {% csrf_token %}
+            <input type="hidden" name="parent_id" value="{{ comment.id }}">
+            <input class="btn btn-primary" type="submit" value="Replay">
+        </form>
+    </div>
+    <h4>There are no comments yet.</h4>
+    {% endfor %}
+
+{% endblock %}
