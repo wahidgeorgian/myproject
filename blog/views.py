@@ -18,14 +18,13 @@ from django.http import HttpResponseRedirect
 # from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-import csv
-
+from django.contrib.auth import logout
 
 #profile page using user name as url
 @login_required
-def profile_page(request, username):
-    user = get_object_or_404(User, username=username)
-    return render(request, 'profile.html', {'userprofile': user})
+def profile_page(request):
+    user = get_object_or_404(User, id=request.user.id)
+    return render(request, 'blog/profile.html', {'user': user})
 
 @login_required
 def edit_profile(request):
@@ -156,7 +155,10 @@ def login(request):
 
 
 def logout_user(request):
-    return render(request, "blog/logout_page.html")
+    logout(request)
+    return redirect('login')
+
+    
 
 
 # For Category of post list...

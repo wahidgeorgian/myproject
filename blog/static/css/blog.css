@@ -19,7 +19,7 @@ h1,
 h2,
 h3,
 h4 {
-    font-family: 'Lobster', cursive;
+    font-family: 'Lobster'
 }
 .nav-brand{
     color: #ffffff13;
@@ -78,7 +78,7 @@ h4 {
 .nav-item {
     float: right;
 }
-.card {
+.card-group {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
     width: 40%;
@@ -93,6 +93,6 @@ h4 {
     border-radius: 5px 5px 0 0;
   }
   
-  .container {
+  /* .container {
     padding: 2px 16px;
-  }
+  } */

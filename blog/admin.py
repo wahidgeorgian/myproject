@@ -1,53 +1,61 @@
-from asyncore import write
-from urllib import response
-from xml.etree.ElementTree import Comment
 from django.contrib import admin
-from .models import CategoryTable, Post, Tags, Comment
-from .models import User
+from django.contrib.auth.admin import UserAdmin
+from .models import CategoryTable, Post, Tags, Comment, User
 from django.http import HttpResponse
 import csv, datetime
-from django.contrib.auth import get_user_model
 
 
-User = get_user_model()
+class UserAdmin(UserAdmin):
+    list_display =('username','first_name','last_name')
+    actions = ("export_as_csv",)
 
-def export_to_csv(modeladmin, request, queryset):
-    opts =modeladmin.model._meta
-    response = HttpResponse(content_type = 'text/csv')
-    response['Conttent-Disposition'] = 'attachment;' 'filename = {}.csv'.format(opts.verbose_name)
-    writer = csv.writer(response)
-    fields = [fields for field in opts.get_fields() if not field.many_to_many and not field.one_to_many]
-    writer.writerow([field.verbos_name for field in fields])
-    for obj in queryset:
-        data_row = []
-        for field in fields:
-            value = getattr(obj, field.name)
-            if isinstance(value, datetime.datetime):
-                value = value.strftime('%d/%m/%Y')
-            data_row.append(value)
-        writer.writerow(data_row)
-    return response
-export_to_csv.short_discription = 'Export to CSV'
+    def export_as_csv(self, request, queryset):
 
-@admin.register(User)
-class UserAdmin(admin.ModelAdmin):
-    action = [export_to_csv]
+        meta = 'users'
+        field_names = ['username','first_name','last_name','email','mobile_number','city','state','country']
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        writer = csv.writer(response)
+
+        writer.writerow(field_names)
+        for obj in queryset:
+            row = writer.writerow([str(obj.username),str(obj.first_name),str(obj.last_name),str(obj.email),str(obj.mobile_number),str(obj.city),str(obj.state),str(obj.country)])
+
+        return response
+
+    export_as_csv.short_description = "Export Selected"
+
+class PostAdmin(Post):
+    list_display =('title','author','category')
+    actions = ("export_as_csv",)
+
+    def export_as_csv(self, request, queryset):
+
+        meta = 'posts'
+        field_names = ['title','author','category']
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        writer = csv.writer(response)
+
+        writer.writerow(field_names)
+        for obj in queryset:
+            row = writer.writerow([str(obj.title),str(obj.author),str(obj.category),])
+
+        return response
+
+    export_as_csv.short_description = "Export Selected"
 
 
-
-
-
-
-@admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display =('title','author','category')
     list_filter =('title','author','category')
     search_fields = ['title',]
-    action = [export_to_csv]
+    
 
-
-#admin.site.register(Post,PostAdmin)
-# admin.site.register(User)
+admin.site.register(Post,PostAdmin)
+admin.site.register(User, UserAdmin)
 admin.site.register(CategoryTable)
 admin.site.register(Tags)
 admin.site.register(Comment)
