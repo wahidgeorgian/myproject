@@ -1,16 +1,30 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-
-        {% if user.is_authenticated %}
-        <h1>{{ user.username }} Welcome to your profile page</h1>
-        <img src="{{ user.image.url }}" width = "150" height = "150"  />
-        <h4>Email:- {{ user.email }}</h4>
-        <h4>Mobile number:- {{ user.mobile_number }}</h4>
-        <h4>City:- {{ user.city }}</h4>
-        <h4>State:- {{ user.state }}</h4>
-        <h4>Country:- {{ user.country }}</h4>
+{% if user.is_authenticated %}
+<div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="{{ user.image.url }}" class="img-fluid rounded-start" >
+            <a class="btn btn-secondary" style="margin-right:60px ;" href="{% url 'edit-profile' %}">Edit</a>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body" style="margin-left:50px;">
+              <h5 class="card-title">Username: {{ user.username|capfirst }}</h5>
+              <h5 class="card-title">Email: {{ user.email }}</h5>
+              <h5 class="card-title">Phone: {{ user.mobile_number }}</h5>
+              <h5 class="card-title">City: {{ user.city|capfirst }}</h5>
+              <h5 class="card-title">State: {{ user.state|capfirst }}</h5>
+              <h5 class="card-title">Country: {{ user.country|capfirst }}</h5>
         
+            </div>
+            
+          </div>
+        </div>
+      </div>
+                
+                                                        
 
-        {% endif %}
+{% endif %}
+        
 {% endblock %}

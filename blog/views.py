@@ -28,14 +28,17 @@ def profile_page(request):
 
 @login_required
 def edit_profile(request):
+    form = forms.EditProfileForm()
     if request.method == 'POST':
-        form = EditProfileForm(request.POST, instance=request.user)
-    if form.is_valid:
-        form.save()
-        return redirect('profile')
-    else:
-        form = EditProfileForm(instance=request.user)
-    return render(request, 'editprofile.html',{'form': form,})
+        
+        form = EditProfileForm(request.POST,instance=request.user)
+        if form.is_valid:
+            form.save()
+            return redirect('post_list')
+
+        
+    return render(request, 'blog/editprofile.html',{'form': form})
+
 
 
 def post_list(request):
@@ -94,11 +97,11 @@ def post_edit(request, slug):
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
-            post = form.save(commit=False)
-            print(post.tag.name,)
-            post.author = request.user
-            post.published_date = timezone.now()
-            post.save()
+            post = form.save()
+            # print(post.tag.name,"11111111111111111111111111111111111")
+            # post.author = request.user
+            # post.published_date = timezone.now()
+            # post.save()
 
             return redirect('post_detail', slug=post.slug)
     else:
@@ -185,15 +188,3 @@ def tags_list(request, slug):
     return render(request,'blog/tags_list.html',context)
 
 
-# def export_to_csv(request):
-#     post = Post.objects.all()
-#     response = HTTPResponse('text/csv')
-#     response['Content-Disposition'] = 'attachment; filename =post_export.csv'
-#     writer = csv.writer(response)
-#     writer.writerow(['author','title','text','thumbnail','feature','created_date','published_date','category','tag'])
-#     post_fields =post.values_list('author','title','text','thumbnail','feature','created_date','published_date','category','tag')
-#     for post in post_fields:
-#         writer.writerrow(post)
-#     return response
-
-    

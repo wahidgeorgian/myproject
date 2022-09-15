@@ -3,26 +3,29 @@
 {% block content %}
 
 
+    <div class="row">
         {% for post in posts %}
-        
-            <div class = "card mb-6">
-                <img src = "{{ post.thumbnail.url }}" alt="post.title" style = "width: 100%">
-                <div class = "container">
-                    <time class="date">
-                    {{ post.published_date }}
-                    </time>
-                    <h2><a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a></h2>
-                    <h5>Category:-<a href="{% url 'category_list' slug=post.slug %}">{{ post.category }} </a></h5>
-                    <p>{{ post.text|slice:"100" }}</p>
-        
-                    <a class="btn btn-secondary" href="{% url 'post_edit' slug=post.slug %}">Edit</a>
+        <div class="col-md-6">
+            <div class="card mb-6" style="width:35rem; height: 25rem;">
+                <div class="card-body">
+                    <div class="top">
+                    <img src="{{ post.thumbnail.url }}" alt="post.title" style="width:520px;height: 150px;">
+                    <div class="container">
+                        <time class="date">
+                            {{ post.published_date }}
+                        </time>
+                        <h2 ><a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a></h2>
+                        <h5>Category:-<a href="{% url 'category_list' slug=post.slug %}">{{ post.category }} </a></h5>
+                        <p>{{ post.text|truncatechars:"100" }}</p>
+
+                        <!-- <a class="btn btn-secondary" href="{% url 'post_edit' slug=post.slug %}">Edit</a> -->
+                    </div>
+                    </div>
                 </div>
-            </div><br>
-        
+            </div>
+        </div>
         {% endfor %}
-
-
+    </div>
 
 
 {% endblock %}
-               

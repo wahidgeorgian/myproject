@@ -5,14 +5,10 @@ from .models import Post, User, Comment
 from django.contrib.auth.forms import UserCreationForm  
 
 class PostForm(forms.ModelForm):
-    # tags = forms.ModelMultipleChoiceField(
-    #     queryset=Tags.objects.all(),
-    #     widget=forms.CheckboxSelectMultiple
-    # )
+
 
     class Meta:
         model = Post
-        #fields = '__all__'
         fields = ['author','title','text','category','tag','thumbnail','feature',]
 
 # Form for registration
@@ -25,9 +21,7 @@ class SignupForm(UserCreationForm):
 
 
 class LoginForm(forms.Form):
-    # class Meta:
-    #     # model = 
-    #     fields=("username","password",)
+    
     username =forms.CharField(max_length=40)
     password = forms.CharField(max_length=40)
 
@@ -44,6 +38,6 @@ class EditProfileForm(forms.ModelForm):
             'first_name',
             'username',
             'email',
-            'image'
+            
         )
        

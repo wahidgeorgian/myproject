@@ -66,9 +66,9 @@ class User(AbstractUser):
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200,null=True, blank=True)
     email = models.EmailField(max_length=200, blank=True)
-    body = models.TextField()
+    body = models.TextField(null=True,blank=True)
     active = models.BooleanField(default=True)
     parent = models.ForeignKey('self', null=True, blank=True, on_delete= models.CASCADE ,related_name='replies')
 
