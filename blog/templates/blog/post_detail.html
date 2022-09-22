@@ -22,70 +22,100 @@
         {% endfor %}</h6>
         <br>
         <a class="btn btn-secondary" id="btn12">Comments</a>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script>
-            $(document).ready(function () {
-    
-                $("#comnt").hide();
-    
-    
-                $("#btn12").click(function () {
-                    $("#comnt").show();
-                });
-    
-    
-            });
-        </script>
+
 </article>
 
 
-
-<form method="POST" class="comments" id="comnt">
-    {% csrf_token %}
-    {{ comment_form.as_p }}
-    <button type="submit" class="save btn btn-secondary" style="margin-right:600px ;">Save</button>
-</form>
-<br>
-<hr>
-{% for comment in comments %}
-<div class="comment">
-    <p class="info" ><b>{{ comment.name|upper }}</b></p>
-    {{ comment.body|linebreaks }}
-
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script>
-        $(document).ready(function () {
-
-            $("#rep,comnt").hide();
-
-
-            $("#btn11").click(function () {
-                $("#rep").show();
-            });
-
-
-        });
-    </script>
-
-
-    {% for replay in comment.replies.all %}
+<div class="border-0 border-start border-2 ps-2" id="{{comment.id}}">
+    <div>
+        <strong>{{comment.name}}</strong>
+        {% if  comment.parent.name%} to <strong>{{comment.parent.name}}</strong>{% endif %}
+    </div>
     
-        <p class="info" style="margin-left:100%"> {{ replay.name|capfirst }} {{ replay.body }}</p>
+        <p>{{comment.body}}</p>
         
+        
+        <form method="POST" class="comments" id="comnt" >
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <button type="submit" class="save btn btn-secondary" style="margin-right:600px ;">Save</button>
+        </form>
     
-    {% endfor %}
+    
 
-    <form method="POST" id="rep">
-        {{ comment_form.as_p }}
-        {% csrf_token %}
-        <button type="submit" class="save btn btn-secondary" style="margin-right:600px ;">Save</button>
-    </form>
-    <input class="btn btn-primary" type="submit" value="Replay" id="btn11" style="margin-left:450px ;">
     
     
+    {% for comment in comments %}
+    <div class="comment">
+        <p class="info" ><b>{{ comment.name|upper }}</b></p>
+        {{ comment.body|linebreaks }}
+    
+
+
+
+
+        {% for replay in comment.replies.all %}
+        <p class="info" style="margin-left:25%"><strong>{{ replay.name|capfirst }}</strong>  {{ replay.body }}</p>
+        {% endfor %}
+
+        <form class="reply-form" method="POST" id="rep">
+            {{ comment_form.as_p }}
+            {% csrf_token %}
+            <input type="hidden" name="parent_id" value="{{ comment.id }}">
+            <button type="submit" class="save1 btn1 btn1-secondary" style="margin-right:600px ;">Save</button>
+        
+        </form>
+        <input class="btn btn-primary replyb{{ forloop.counter }}" type="submit" value="Replay" id="btn11" style="margin-left:450px ;">
+    </div>    
 </div>
 
-{% endfor %}
 
+
+{% endfor %}
 {% endblock %}
+{% block script %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        
+        $(".reply-form").hide();
+       
+        $(".comment input[value='Replay']").on ('click', function () {
+            $(this).parent().find(".reply-form").toggle();
+            
+        });
+            
+    });
+</script>
+<script>
+    $(document).ready(function () {
+
+        $("#comnt").hide();
+
+
+        $("#btn12").click(function () {
+            $("#comnt").toggle();
+        });
+
+
+
+    });
+</script>
+{% endblock %}
+
+<!-- <script>
+function handleReply(response_id) {
+    const reply_form_container = document.querySelector(`#reply-form-container-${response_id}`)
+    if (reply_form_container) {
+        reply_form_container.style.display = 'block';
+    }
+}
+
+function handleCancel(response_id) {
+    const reply_form_container = document.querySelector(`#reply-form-container-${response_id}`)
+    if (reply_form_container) {
+        reply_form_container.style.display = 'none';
+    }
+}
+</script> -->
+
