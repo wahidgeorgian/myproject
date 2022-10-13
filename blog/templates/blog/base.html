@@ -1,91 +1,99 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Django Girls blog</title><!-- CSS only -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
-        <!-- JavaScript Bundle with Popper -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
-    </head>
-    <body>
-        <header class="page-header">
-            <div class="container">
-                <nav class="navbar navbar-expand-lg bg-light">
-                    <div class="container-fluid">
-                      <a class="navbar-brand" href="/" style="display:inline-block">Blog</a>      
-                      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                      </button>
-                      <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav">
-                          <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/mypolls">Polls</a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="{% url 'post_new'%}">Addblog</a>
-                          </li>
-                          <!-- <li class="nav-item">
+
+<head>
+  <title>Django Girls blog</title><!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <header class="page-header">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/" style="display:inline-block">Blog</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/mypolls">Polls</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'post_new'%}">Addblog</a>
+              </li>
+              <!-- <li class="nav-item">
                             <a class="nav-link" href="#">Pricing</a>
                           </li> -->
-                          <div class="dropdown" style="margin-left: 740px;">
+              <div class="dropdown" style="margin-left: 740px;">
 
-                          {% if request.user.is_authenticated %}
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              Profile
-                            </button>
-                            <ul class="dropdown-menu">
-                              
-                              <!-- <li><button class="dropdown-item" type="button" ><a href="{% url 'login'%}">Login</a></button></li> -->
-                              <li><button class="dropdown-item" type="button"><a href="{% url 'profile'%}">Profile</a></button></li>
-                              <li><button class="dropdown-item" type="button"><a href="{% url 'logout_page'%}">Logout</a></button></li>
-                              
-                            </ul>
-                          {% else %}
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              Login
-                            </button>
-                            <ul class="dropdown-menu">
-                              
-                              <li><button class="dropdown-item" type="button" ><a href="{% url 'login'%}">Login</a></button></li>
-                              <li><button class="dropdown-item" type="button"><a href="{% url 'register'%}">SignUp</a></button></li>
-                              <!-- <li><button class="dropdown-item" type="button"><a href="{% url 'logout_page'%}">Logout</a></button></li> -->
-                              
-                            </ul>
-                          {% endif %}
-                        </div>
-                        </ul>
-                      </div>
-                    </div>
-                  </nav>
-                {% if user.is_authenticated %}
-                    <a href="{% url 'post_new' %}" class="top-menu">
-                        <!-- {% include './icons/file-earmark-plus.svg' %} -->
-                    </a>
+                {% if request.user.is_authenticated %}
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  Profile
+                </button>
+                <ul class="dropdown-menu">
+
+                  <!-- <li><button class="dropdown-item" type="button" ><a href="{% url 'login'%}">Login</a></button></li> -->
+                  <li><button class="dropdown-item" type="button"><a href="{% url 'profile'%}">Profile</a></button></li>
+                  <li><button class="dropdown-item" type="button"><a href="{% url 'logout_page'%}">Logout</a></button>
+                  </li>
+
+                </ul>
+                {% else %}
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  Login
+                </button>
+                <ul class="dropdown-menu">
+
+                  <li><button class="dropdown-item" type="button"><a href="{% url 'login'%}">Login</a></button></li>
+                  <li><button class="dropdown-item" type="button"><a href="{% url 'register'%}">SignUp</a></button></li>
+                  <!-- <li><button class="dropdown-item" type="button"><a href="{% url 'logout_page'%}">Logout</a></button></li> -->
+
+                </ul>
                 {% endif %}
-                
-                <!-- <h1 style="display:inline-block"><a href="/">Django Girls Blog</a></h1>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; -->
-                <!-- <h1 style="display:inline-block"><a href="/mypolls">Polls</a></h1> -->
-                
-                
-            </div>
-        </header>
-        <main class="content container">
-            <div class="row">
-                <div class="col">
-                    {% block content %}
+              </div>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      {% if user.is_authenticated %}
+      <a href="{% url 'post_new' %}" class="top-menu">
+        <!-- {% include './icons/file-earmark-plus.svg' %} -->
+      </a>
+      {% endif %}
 
-                    {% endblock %}
-                </div>
-            </div>
-        </main>
-        <footer>
-          {% block script %}
+      <!-- <h1 style="display:inline-block"><a href="/">Django Girls Blog</a></h1>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; -->
+      <!-- <h1 style="display:inline-block"><a href="/mypolls">Polls</a></h1> -->
 
-          {% endblock %}
-        </footer>
-    </body>
-    
+
+    </div>
+  </header>
+  <main class="content container">
+    <div class="row">
+      <div class="col">
+        {% block content %}
+
+        {% endblock %}
+      </div>
+    </div>
+  </main>
+  <footer>
+    {% block script %}
+
+    {% endblock %}
+  </footer>
+</body>
+
 </html>
-

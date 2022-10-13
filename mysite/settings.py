@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'mypolls',
+    'rest_framework',
+    
     # 'django_extensions',
 ]
 
