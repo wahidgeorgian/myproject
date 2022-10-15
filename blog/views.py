@@ -20,11 +20,6 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import logout
-from rest_framework import viewsets
-from rest_framework import permissions
-from .serializers import UserSerializer
-from blog import serializers
-from rest_framework import generics
 
 #profile page using user name as url
 @login_required
@@ -193,13 +188,13 @@ def tags_list(request, slug):
     }
     return render(request,'blog/tags_list.html',context)
 
-class UserList(generics.ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = serializers.UserSerializer
+# class UserList(generics.ListAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = serializers.UserSerializer
 
-class UserDetail(generics.RetrieveAPIView):
-    queryset = User.objects.all()
-    serializer_class = serializers.UserSerializer
+# class UserDetail(generics.RetrieveAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = serializers.UserSerializer
 
 # class PostList(generics.ListCreateAPIView):
 #     queryset = Post.objects.all()

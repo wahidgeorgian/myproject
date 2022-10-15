@@ -18,7 +18,7 @@ from django.urls import path, include
 
 from django.conf import settings
 from django.conf.urls.static import static
-# from rest_framework import routers
+
 
 
 
@@ -27,8 +27,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('mypolls/', include('mypolls.urls')),
     path('', include('blog.urls')),
-    path('users', include('blog.api_url')),
-    # path('/girls_api/',include('blog.urls')),
+    
+    path('api_user/',include('blog.api.urls')),
+    path('api_comment/',include('blog.api.urls')),
    
     # path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
