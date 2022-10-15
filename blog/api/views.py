@@ -1,5 +1,5 @@
 from blog.models import User, Comment, Post
-from blog.api.serializers import UserSerializer, PostSerializer
+from blog.api.serializers import UserSerializer, PostSerializer, CommentSerializer
 from rest_framework import viewsets
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -13,7 +13,7 @@ class PostViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
-# class CommentViewSet(viewsets.ModelViewSet):
-#     queryset = Comment.objects.all()
-#     serializer_class = CommentSerializer
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
 

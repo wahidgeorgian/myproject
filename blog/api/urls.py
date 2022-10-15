@@ -13,5 +13,5 @@ router.register('crud',views.PostViewSet, basename = 'post')
 urlpatterns = [
     path("", include(router.urls)),
     path("api_post/", include(router.urls)),
-    # path("api_comment/", include(router.urls))
+    path("api_comment/", include(router.urls))
 ]
