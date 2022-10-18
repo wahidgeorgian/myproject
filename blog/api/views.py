@@ -1,6 +1,6 @@
 from urllib import request
-from blog.models import User, Post, Comment
-from blog.api.serializers import UserSerializer, PostSerializer, CommentSerializer
+from blog.models import User, Post, Comment, CategoryTable as Category, Tags
+from blog.api.serializers import UserSerializer, PostSerializer, CommentSerializer, CategorySerializer,TagsSerializer
 from rest_framework import viewsets, status
 from django.http import HttpResponse, JsonResponse
 from rest_framework.response import Response
@@ -13,31 +13,36 @@ class UserViewSet(viewsets.ModelViewSet):
   
 
 class PostViewSet(viewsets.ModelViewSet):
-    
-    querset = Post.objects.all()
     serializer_class = PostSerializer
     Http_mathod_names = ['get',]
     def get_queryset(self):
         return Post.objects.all()
-
-    # Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-    # def get_queryset(self):
-    #     return HttpResponse(status=404)
-    
     
 
 class PostDetail(viewsets.ModelViewSet):
-    queryset = Post.objects.all()
     serializer_class = PostSerializer
-
-    
+    Http_mathod_name = ['get',]
+    def get_queryset(self):
+        return Post.objects.all()
 
 class CommentViewSet(viewsets.ModelViewSet):
-    queryset = Comment.objects.all()
     serializer_class = CommentSerializer
+    Http_mathod_name = ['get',]
 
     def get_queryset(self):
-        return
+        return Comment.objects.all()
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    serializer_class = CategorySerializer
+    Http_method_name = ['get',]
+
+    def get_queryset(self):
+        return Category.objects.all()
+
+class TagsViewSet(viewsets.ModelViewSet):
+    serializer_class = TagsSerializer
+    Http_method_name = ['get',]
+    
+    def get_queryset(self):
+        return Tags.objects.all()
 

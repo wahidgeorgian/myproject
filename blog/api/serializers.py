@@ -1,6 +1,6 @@
 from dataclasses import field
 from blog import models
-from blog.models import User, Post, Comment
+from blog.models import User, Post, Comment, CategoryTable as Category, Tags
 from rest_framework import serializers
 
 
@@ -13,14 +13,19 @@ class PostSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Post
-        fields = ('id','author','title','text')
+        fields = ('id','author','title','text','thumbnail','feature','created_date','published_date','category','tag','slug',)
        
-
-
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields =['post', 'name', 'email', 'body']
+        fields =('post', 'name', 'email', 'body')
 
-# author = serializers.ReadOnlyField(source='author.username')
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ('name', 'slug',)
 
+class TagsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tags
+        fields = ('name', 'slug',)

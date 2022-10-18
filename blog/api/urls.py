@@ -5,9 +5,12 @@ from rest_framework.routers import DefaultRouter
 
 
 router = DefaultRouter()
-router.register('crud',views.UserViewSet, basename = 'user')
+router.register('user',views.UserViewSet, basename = 'user')
 router.register(r'posts',views.PostViewSet, basename = 'post')
+router.register(r'post_detail',views.PostDetail, basename = 'post_detail')
 router.register(r'comments',views.CommentViewSet, basename = 'comment')
+router.register(r'post_category', views.CategoryViewSet, basename = 'category')
+router.register(r'post_tags', views.TagsViewSet, basename = 'tags')
 
 
 urlpatterns = [
