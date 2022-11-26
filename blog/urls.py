@@ -1,13 +1,6 @@
 from django.urls import path
 from . import views
 
-
-
-
-
-
-
-
 urlpatterns = [
     path('', views.post_list, name='post_list'),
     path('post/<str:slug>/detail/', views.post_detail, name='post_detail'),
@@ -20,6 +13,5 @@ urlpatterns = [
     path('tags/<str:slug>', views.tags_list, name = 'tags_list'),
     path('profile', views.profile_page, name = 'profile'),
     path('edit-profile/', views.edit_profile, name = 'edit-profile'),
-    
     
 ]

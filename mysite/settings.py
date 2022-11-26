@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'mypolls',
     'rest_framework',
     
-    # 'django_extensions',
+    
 ]
 
 MIDDLEWARE = [

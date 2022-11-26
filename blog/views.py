@@ -31,31 +31,20 @@ def profile_page(request):
 def edit_profile(request):
     form = forms.EditProfileForm()
     if request.method == 'POST':
-        
         form = EditProfileForm(request.POST,instance=request.user)
         if form.is_valid:
             form.save()
-            return redirect('post_list')
-
-        
+            return redirect('post_list')    
     return render(request, 'blog/editprofile.html',{'form': form})
-
-
 
 def post_list(request):
     posts = Post.objects.all().order_by('published_date')
     return render(request, 'blog/post_list.html', {'posts': posts})
 
-
-# def post_list_cat(request):
-# 	posts =Post.objects.filter(category = category)
-# 	return render(request, 'blog/category_list.html', {'posts': posts})
-
-
 def post_detail(request, slug):
 	post = get_object_or_404(Post, slug=slug)
 	comments = post.comments.filter(parent__isnull=True)
-	comment_form= CommentForm(data=request.POST)
+	comment_form= CommentForm()
 	if request.method == 'POST':
 		comment_form = CommentForm(data=request.POST)
 		if comment_form.is_valid():
@@ -74,9 +63,7 @@ def post_detail(request, slug):
 			return redirect('post_detail', slug=post.slug)
 		else:
 			comment_form = CommentForm()
-
 	return render(request, 'blog/post_detail.html', {'post': post, 'comments': comments,'comment_form': comment_form})
-
 
 def post_new(request):
     if request.method == "POST":
@@ -86,12 +73,10 @@ def post_new(request):
             post.author = request.user
             post.published_date = timezone.now()
             post.save()
-
             return redirect('post_detail', slug=post.slug)
     else:
         form = PostForm()
     return render(request, 'blog/post_edit.html', {'form': form})
-
 
 def post_edit(request, slug):
     post = get_object_or_404(Post, slug=slug)
@@ -99,22 +84,14 @@ def post_edit(request, slug):
         form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             post = form.save()
-            # print(post.tag.name,"11111111111111111111111111111111111")
-            # post.author = request.user
-            # post.published_date = timezone.now()
-            # post.save()
-
             return redirect('post_detail', slug=post.slug)
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
 
-
 # This is for user registration.
-
 def register(request):
     form = forms.SignupForm()
-
     if request.method == 'POST':
         form = SignupForm(request.POST, request.FILES)
         print(form.is_valid(), form.errors)
@@ -128,23 +105,17 @@ def register(request):
             return redirect('post_list')
     else:
         form = SignupForm()
-
     return render(request, 'blog/register.html', {'form': form, })
 
-
-
-
+# Views for login
 def login(request):
     form = forms.LoginForm()
-
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
-            
             username=form.cleaned_data.get('username')
             password=form.cleaned_data.get("password")
             user = User.objects.filter(username=username).last()
-            # user = authenticate(username=username, password=password)
             if user:
                 user = authenticate(username=username, password=password)
                 wahidlogin(request, user)
@@ -156,17 +127,11 @@ def login(request):
     return render(request, "blog/login.html", context={"form": form, })
 
 # for logout user.....
-
-
 def logout_user(request):
     logout(request)
     return redirect('login')
 
-    
-
-
 # For Category of post list...
-
 def category_list(request, slug):
     post = get_object_or_404(Post, slug=slug)
     category = post.category
@@ -178,7 +143,6 @@ def category_list(request, slug):
     }
     print(category)
     return render(request, 'blog/category_list.html', context)
-
 
 def tags_list(request, slug):
     tag= Tags.objects.filter(slug=slug).last()
