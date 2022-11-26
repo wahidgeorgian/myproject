@@ -99,7 +99,7 @@ def register(request):
             print("hdghfkj")
             user_obj = form.save()
             user = User.objects.filter(
-                     username=form.cleaned_data["username"]).last()
+            username=form.cleaned_data["username"]).last()
             wahidlogin(request, user)
             messages.success(request, "Registration successful.")
             return redirect('post_list')
